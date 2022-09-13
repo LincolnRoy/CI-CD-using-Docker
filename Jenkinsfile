@@ -9,7 +9,8 @@ pipeline {
       stage('checkout') {
            steps {
              
-                git branch: 'master', url: 'https://github.com/LincolnRoy/CI-CD-using-Docker.git'
+               // git branch: 'master', url: 'https://github.com/LincolnRoy/CI-CD-using-Docker.git'
+		  git branch: '*/master', url: 'https://github.com/LincolnRoy/CI-CD-using-Docker.git'
              
           }
         }
