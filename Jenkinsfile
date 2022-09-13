@@ -25,9 +25,9 @@ pipeline {
   stage('Docker Build and Tag') {
            steps {
               
-                sh 'docker build -t samplewebapp:latest .' 
-                sh 'docker tag samplewebapp nikhilnidhi/samplewebapp:latest'
-                //sh 'docker tag samplewebapp nikhilnidhi/samplewebapp:$BUILD_NUMBER'
+                sh 'docker build -t docker-repo:latest .' 
+                sh 'docker tag docker-repo rootroy/docker-repo:latest'
+                //sh 'docker tag docker-repo rootroy/docker-repo:$BUILD_NUMBER'
                
           }
         }
@@ -36,8 +36,8 @@ pipeline {
           
             steps {
         withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
-          sh  'docker push nikhilnidhi/samplewebapp:latest'
-        //  sh  'docker push nikhilnidhi/samplewebapp:$BUILD_NUMBER' 
+          sh  'docker push rootroy/docker-repo:latest'
+        //  sh  'docker push rootroy/docker-repo:$BUILD_NUMBER' 
         }
                   
           }
@@ -47,14 +47,14 @@ pipeline {
              
             steps 
 			{
-                sh "docker run -d -p 8003:8080 nikhilnidhi/samplewebapp"
+                sh "docker run -d -p 8003:8080 rootroy/docker-repo"
  
             }
         }
  stage('Run Docker container on remote hosts') {
              
             steps {
-                sh "docker -H ec2-user@172.31.88.28 run -d -p 8003:8080 nikhilnidhi/samplewebapp"
+                sh "docker -H ec2-user@172.31.88.28 run -d -p 8003:8080 rootroy/docker-repo"
  
             }
         }
